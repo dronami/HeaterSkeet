@@ -2,10 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using TMPro;
 
 public class Player : MonoBehaviour
 {
     private MainInputActions controls;
+
+    public TextMeshProUGUI display;
+    public BulletManager bulletManager;
 
     public Transform playerTransform;
     public Transform reticleTransform;
@@ -19,6 +23,8 @@ public class Player : MonoBehaviour
     private Vector2 moveVelocity;
     private Vector2 reticleVelocity;
 
+    private Vector2 diff;
+
     private bool jumping = false;
     private int jumpCount = 0;
     private const int MAX_JUMPS = 2;
@@ -26,6 +32,10 @@ public class Player : MonoBehaviour
     private const float GROUND_Y = -1.0f;
     private const float JUMP_VELOCITY_START = 0.15f;
     private const float JUMP_GRAVITY = -0.0125f;
+
+    private bool shooting = false;
+    private int shotCooldownTimer;
+    private const int SHOT_COOLDOWN = 2;
 
     // Start is called before the first frame update
     void Awake()
@@ -37,7 +47,7 @@ public class Player : MonoBehaviour
         controls.Enable();
         
         // Setup player movement callback
-        controls.Playa.MovePlayer.performed += context => movePlaya(context.action, context.ReadValue<Vector2>());
+        controls.Playa.MovePlayer.performed += context => movePlaya(context.ReadValue<Vector2>());
         controls.Playa.MovePlayer.canceled += context => stopMovePlaya();
 
         // Setup reticle movement callback
@@ -46,9 +56,13 @@ public class Player : MonoBehaviour
 
         // Setup jump callback
         controls.Playa.Jump.performed += context => startJump();
+
+        // Setup shoot callback
+        controls.Playa.Shoot.performed += context => startShoot();
+        controls.Playa.Shoot.canceled += context => endShoot();
     }
 
-    private void movePlaya(InputAction action, Vector2 direction) {
+    private void movePlaya(Vector2 direction) {
         moveVelocity = direction;
     }
 
@@ -70,6 +84,18 @@ public class Player : MonoBehaviour
         jumping = true;
         jumpCount++;
         jumpVelocity = JUMP_VELOCITY_START;
+    }
+
+    private void startShoot() {
+        if (!shooting) {
+            bulletManager.initializeBullet(playerTransform.position, reticleTransform.position);
+            shooting = true;
+            shotCooldownTimer = 0;
+        }
+    }
+
+    private void endShoot() {
+        shooting = false;
     }
 
     // Update is called once per frame
@@ -114,6 +140,14 @@ public class Player : MonoBehaviour
                 jumping = false;
                 jumpCount = 0;
                 playerTransform.localPosition = new Vector3(playerTransform.localPosition.x, GROUND_Y, playerTransform.localPosition.z);
+            }
+        }
+
+        if (shooting) {
+            shotCooldownTimer++;
+            if (shotCooldownTimer > SHOT_COOLDOWN) {
+                bulletManager.initializeBullet(playerTransform.position, reticleTransform.position);
+                shotCooldownTimer = 0;
             }
         }
     }
