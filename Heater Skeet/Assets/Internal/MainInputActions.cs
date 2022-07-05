@@ -158,7 +158,7 @@ public partial class @MainInputActions : IInputActionCollection2, IDisposable
                     ""id"": ""0618ea0f-f22d-4a98-ae7b-9346815df8fe"",
                     ""path"": ""<Gamepad>/rightTrigger"",
                     ""interactions"": """",
-                    ""processors"": ""AxisDeadzone"",
+                    ""processors"": """",
                     ""groups"": ""Controller"",
                     ""action"": ""Shoot"",
                     ""isComposite"": false,
