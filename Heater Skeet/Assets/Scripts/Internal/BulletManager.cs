@@ -56,7 +56,7 @@ public class BulletManager : MonoBehaviour
                 doneIndexes[currentDone] = bulletIndex;
                 doneCount++;
 
-                fxManager.initializeFX(bullets[bulletIndex].transform.localPosition);
+                fxManager.initializeFX(FXManager.FXType.BulletHitFX, bullets[bulletIndex].transform.localPosition);
             }
         }
 

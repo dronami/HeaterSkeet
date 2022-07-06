@@ -136,7 +136,7 @@
                     "id": "0618ea0f-f22d-4a98-ae7b-9346815df8fe",
                     "path": "<Gamepad>/rightTrigger",
                     "interactions": "",
-                    "processors": "",
+                    "processors": "AxisDeadzone",
                     "groups": "Controller",
                     "action": "Shoot",
                     "isComposite": false,

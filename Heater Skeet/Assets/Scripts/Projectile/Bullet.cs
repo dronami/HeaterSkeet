@@ -9,6 +9,7 @@ public class Bullet : MonoBehaviour
 
     private Vector3 bulletVelocity;
     public bool bulletActive = false;
+    private bool ready2Delete = false;
 
     private const float BULLET_SPEED = 0.6f;
 
@@ -37,6 +38,7 @@ public class Bullet : MonoBehaviour
         bulletVelocity = (endPos - startPos).normalized * BULLET_SPEED;
 
         bulletActive = true;
+        ready2Delete = false;
 
         frameCounter = 0;
     }
@@ -47,13 +49,19 @@ public class Bullet : MonoBehaviour
             frameCounter++;
             //transform.localPosition = Vector3.Lerp(startPosition, endPosition, frameCounter / duration);
             transform.localPosition += bulletVelocity;
-            if (transform.localPosition.z >= 0.0f) {
+            if (transform.localPosition.z >= 10.0f || ready2Delete) {
                 bulletActive = false;
                 return true;
             }
         }
 
         return false;
+    }
+
+    private void OnTriggerEnter(Collider other) {
+        ready2Delete = true;
+        // other.GetComponent<Flasher>().startFlashing();
+        other.GetComponent<HitObject>().getHit(1);
     }
 
     // Update is called once per frame
