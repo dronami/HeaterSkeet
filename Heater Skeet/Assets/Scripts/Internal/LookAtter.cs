@@ -24,9 +24,15 @@ public class LookAtter : MonoBehaviour
         // transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(targetTransform.position), rotationSpeed);
 
         if (applyOffset) {
-            transform.LookAt(targetTransform);
-            transform.localRotation = Quaternion.Euler(0.0f,
-                transform.localRotation.eulerAngles.y + offset.y, transform.localRotation.eulerAngles.z + offset.z);
+            // transform.LookAt(targetTransform,Vector3.up);
+            // transform.localRotation = Quaternion.Euler(transform.localRotation.eulerAngles.x + offset.x,
+            //     transform.localRotation.eulerAngles.y + offset.y, transform.localRotation.eulerAngles.z + offset.z);
+
+            Vector3 relativePos = transform.InverseTransformDirection(targetTransform.position);
+            Vector3 targetPos = transform.TransformPoint(relativePos);
+
+            transform.LookAt(targetPos, transform.up);
         }
+
     }
 }
