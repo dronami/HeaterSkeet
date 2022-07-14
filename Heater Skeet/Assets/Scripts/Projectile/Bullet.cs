@@ -16,7 +16,7 @@ public class Bullet : MonoBehaviour
 
     private float bulletSpeed;
     private readonly Dictionary<BulletType, float> type2Speed = new Dictionary<BulletType, float>() {
-        { BulletType.PlayerBasic, 0.6f },
+        { BulletType.PlayerBasic, 1.2f },
         { BulletType.EnemyBasic, 0.1f }
     };
 

@@ -20,7 +20,7 @@ public class Player : MonoBehaviour
     private float RETICLE_SPEED = 0.45f;
 
     private float PLAYER_MAX_X = 3.1f;
-    private readonly Vector2 RETICLE_MAX = new Vector2(12.0f, 5.0f);
+    private readonly Vector2 RETICLE_MAX = new Vector2(16.0f, 7.0f);
 
     private Vector2 moveVelocity;
     private Vector2 reticleVelocity;

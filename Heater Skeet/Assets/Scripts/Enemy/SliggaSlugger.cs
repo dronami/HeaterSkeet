@@ -107,6 +107,7 @@ public class SliggaSlugger : MonoBehaviour
         if (sliggaState == SliggaState.Running) {
             for (int e = 0; e < eyeLookers.Length; e++) {
                 eyeLookers[e].isActive = false;
+                eyeLookers[e].transform.localRotation = Quaternion.identity;
             }
 
             animator.SetBool("isRunning", true);
