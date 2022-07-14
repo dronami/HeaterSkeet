@@ -4,6 +4,8 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using TMPro;
 
+using BulletType = BulletManager.BulletType;
+
 public class Player : MonoBehaviour
 {
     private MainInputActions controls;
@@ -88,7 +90,7 @@ public class Player : MonoBehaviour
 
     private void startShoot() {
         if (!shooting) {
-            bulletManager.initializeBullet(playerTransform.position, reticleTransform.position);
+            bulletManager.initializeBullet(BulletType.PlayerBasic, playerTransform.position, reticleTransform.position);
             shooting = true;
             shotCooldownTimer = 0;
         }
@@ -101,6 +103,8 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Debug.DrawLine(playerTransform.position, reticleTransform.position, Color.green);
+
         playerTransform.localPosition = new Vector3(playerTransform.localPosition.x + moveVelocity.x * PLAYER_SPEED,
             playerTransform.localPosition.y, playerTransform.localPosition.z);
         // Enforce player bounds
@@ -146,7 +150,7 @@ public class Player : MonoBehaviour
         if (shooting) {
             shotCooldownTimer++;
             if (shotCooldownTimer > SHOT_COOLDOWN) {
-                bulletManager.initializeBullet(playerTransform.position, reticleTransform.position);
+                bulletManager.initializeBullet(BulletType.PlayerBasic, playerTransform.position, reticleTransform.position);
                 shotCooldownTimer = 0;
             }
         }

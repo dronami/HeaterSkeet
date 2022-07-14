@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+using BulletType = BulletManager.BulletType;
+
 public class SliggaSlugger : MonoBehaviour
 {
     public enum SliggaState {
@@ -16,9 +18,14 @@ public class SliggaSlugger : MonoBehaviour
 
     public SliggaState sliggaState;
     public Animator animator;
+    public LookAtter aimLooker;
+    public LookAtter[] eyeLookers;
+    public Transform shootPoint;
+    public Transform playerTransform;
+
+    public BulletManager bulletManager;
 
     public HitObject[] hitObjects;
-
     public SliggaAction[] sliggaPatterns;
 
     private int actionIndex;
@@ -43,6 +50,8 @@ public class SliggaSlugger : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (sliggaPatterns.Length == 0) return;
+
         stateCounter++;
 
         if (sliggaState == SliggaState.Running) {
@@ -50,8 +59,6 @@ public class SliggaSlugger : MonoBehaviour
         }
 
         if (rotating) {
-            Debug.Log(startRotation + " vs. " + endRotation);
-            Debug.Log("Rat: " + rotationCounter / (float)rotationDuration);
             rotationCounter++;
             transform.rotation = Quaternion.Lerp(startRotation, endRotation, rotationCounter / (float)rotationDuration);
 
@@ -72,6 +79,8 @@ public class SliggaSlugger : MonoBehaviour
     }
 
     private void nextAction() {
+        if (sliggaPatterns.Length == 0) return;
+
         stateCounter = 0;
         sliggaState = sliggaPatterns[actionIndex].actionState;
         currentDuration = (int)(sliggaPatterns[actionIndex].duration * 60);
@@ -91,14 +100,28 @@ public class SliggaSlugger : MonoBehaviour
             startRotation = Quaternion.Euler(0.0f, sliggaPatterns[actionIndex].startRotation, 0.0f);
             endRotation = Quaternion.Euler(0.0f, sliggaPatterns[actionIndex].endRotation, 0.0f);
         }
+        if (sliggaState == SliggaState.Idle) {
+            aimLooker.enableRotation(false);
+        }
+        
         if (sliggaState == SliggaState.Running) {
+            for (int e = 0; e < eyeLookers.Length; e++) {
+                eyeLookers[e].isActive = false;
+            }
+
             animator.SetBool("isRunning", true);
+            aimLooker.enableRotation(false);
         } else {
+            for (int e = 0; e < eyeLookers.Length; e++) {
+                eyeLookers[e].isActive = true;
+            }
+
             animator.SetBool("isRunning", false);
         }
 
         if (sliggaState == SliggaState.Cocking) {
             animator.SetBool("isCocking", true);
+            aimLooker.enableRotation(true);
         } else {
             animator.SetBool("isCocking", false);
         }
@@ -110,6 +133,7 @@ public class SliggaSlugger : MonoBehaviour
         }
 
         if (sliggaState == SliggaState.Shooting) {
+            bulletManager.initializeBullet(BulletType.EnemyBasic, shootPoint.position, playerTransform.position);
             animator.SetBool("isShooting", true);
         } else {
             animator.SetBool("isShooting", false);

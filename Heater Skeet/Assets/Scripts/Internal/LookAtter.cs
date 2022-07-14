@@ -4,11 +4,17 @@ using UnityEngine;
 
 public class LookAtter : MonoBehaviour
 {
+    public bool isActive = true;
+
     public Transform targetTransform;
     public bool applyOffset = false;
     public Vector3 offset;
 
-    private float rotationSpeed = 0.1f;
+    public bool instaRotation = true;
+    private Quaternion endQuaternion;
+
+    private int rotationCounter = 0;
+    private const float ROT_DUR = 60.0f;
 
     // Start is called before the first frame update
     void Start()
@@ -16,23 +22,28 @@ public class LookAtter : MonoBehaviour
         
     }
 
+    public void enableRotation(bool e) {
+        isActive = e;
+        rotationCounter = 0;
+    }
+
     // Update is called once per frame
     void Update() {
+        if (!isActive) return;
         // transform.LookAt(targetTransform);
-        Debug.DrawLine(transform.position, targetTransform.position);
+        // Debug.DrawLine(transform.position, targetTransform.position);
 
-        // transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(targetTransform.position), rotationSpeed);
-
-        if (applyOffset) {
-            // transform.LookAt(targetTransform,Vector3.up);
-            // transform.localRotation = Quaternion.Euler(transform.localRotation.eulerAngles.x + offset.x,
-            //     transform.localRotation.eulerAngles.y + offset.y, transform.localRotation.eulerAngles.z + offset.z);
-
-            Vector3 relativePos = transform.InverseTransformDirection(targetTransform.position);
-            Vector3 targetPos = transform.TransformPoint(relativePos);
-
-            transform.LookAt(targetPos, transform.up);
+        if (instaRotation) {
+            transform.rotation = Quaternion.LookRotation(transform.position - targetTransform.position);
+            if (applyOffset) {
+                transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles.x + offset.x,
+                    transform.rotation.eulerAngles.y + offset.y,
+                    transform.rotation.eulerAngles.z + offset.z);
+            }
+        } else {
+            rotationCounter++;
+            endQuaternion = Quaternion.LookRotation(transform.position - targetTransform.position);
+            transform.rotation = Quaternion.Lerp(transform.rotation, endQuaternion, rotationCounter / ROT_DUR);
         }
-
     }
 }
