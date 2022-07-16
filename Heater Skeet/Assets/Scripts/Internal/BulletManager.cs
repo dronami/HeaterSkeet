@@ -7,6 +7,7 @@ public class BulletManager : MonoBehaviour
     public enum BulletType {
         PlayerBasic,
         EnemyBasic,
+        RealBullet,
 
         Count
     }

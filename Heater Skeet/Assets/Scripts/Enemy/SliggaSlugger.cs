@@ -134,7 +134,7 @@ public class SliggaSlugger : MonoBehaviour
         }
 
         if (sliggaState == SliggaState.Shooting) {
-            bulletManager.initializeBullet(BulletType.EnemyBasic, shootPoint.position, playerTransform.position);
+            bulletManager.initializeBullet(BulletType.RealBullet, shootPoint.position, playerTransform.position);
             animator.SetBool("isShooting", true);
         } else {
             animator.SetBool("isShooting", false);

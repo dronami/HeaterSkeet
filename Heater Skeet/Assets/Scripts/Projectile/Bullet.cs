@@ -17,7 +17,15 @@ public class Bullet : MonoBehaviour
     private float bulletSpeed;
     private readonly Dictionary<BulletType, float> type2Speed = new Dictionary<BulletType, float>() {
         { BulletType.PlayerBasic, 1.2f },
-        { BulletType.EnemyBasic, 0.1f }
+        { BulletType.EnemyBasic, 0.1f },
+        { BulletType.RealBullet, 0.15f }
+    };
+
+    private bool rotates = false;
+    private readonly Dictionary<BulletType, bool> type2Rotates = new Dictionary<BulletType, bool>() {
+        { BulletType.PlayerBasic, true },
+        { BulletType.EnemyBasic, false },
+        { BulletType.RealBullet, false },
     };
 
     private const float BULLET_SPEED = 0.6f;
@@ -36,6 +44,7 @@ public class Bullet : MonoBehaviour
     void Start()
     {
         bulletSpeed = type2Speed[bulletType];
+        rotates = type2Rotates[bulletType];
     }
 
     public void initializeBullet(Vector3 startPos, Vector3 endPos) {
@@ -56,7 +65,9 @@ public class Bullet : MonoBehaviour
 
     public bool updateBullet() {
         if (bulletActive) {
-            transform.Rotate(ROTATE_VEL);
+            if (rotates) {
+                transform.Rotate(ROTATE_VEL);
+            }
             frameCounter++;
             //transform.localPosition = Vector3.Lerp(startPosition, endPosition, frameCounter / duration);
             transform.localPosition += bulletVelocity;
