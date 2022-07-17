@@ -40,17 +40,24 @@ public class SliggaSlugger : MonoBehaviour
     private Quaternion startRotation;
     private Quaternion endRotation;
 
+    private bool isActive = false;
+
     // Start is called before the first frame update
     void Start()
     {
+        
+    }
+
+    public void startPattern() {
         actionIndex = 0;
         nextAction();
+        isActive = true;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (sliggaPatterns.Length == 0) return;
+        if (!isActive || sliggaPatterns.Length == 0) return;
 
         stateCounter++;
 
@@ -72,9 +79,10 @@ public class SliggaSlugger : MonoBehaviour
             actionIndex++;
             if (actionIndex >= sliggaPatterns.Length) {
                 actionIndex = 0;
+                isActive = false;
+            } else {
+                nextAction();
             }
-
-            nextAction();
         }
     }
 

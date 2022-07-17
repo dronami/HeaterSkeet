@@ -14,6 +14,8 @@ public class Bullet : MonoBehaviour
     public bool bulletActive = false;
     private bool ready2Delete = false;
 
+    private const float MAX_DISTANCE = 30.0f;
+
     private float bulletSpeed;
     private readonly Dictionary<BulletType, float> type2Speed = new Dictionary<BulletType, float>() {
         { BulletType.PlayerBasic, 1.2f },
@@ -71,7 +73,7 @@ public class Bullet : MonoBehaviour
             frameCounter++;
             //transform.localPosition = Vector3.Lerp(startPosition, endPosition, frameCounter / duration);
             transform.localPosition += bulletVelocity;
-            if (transform.localPosition.z >= 10.0f || transform.localPosition.z <= -10.0f || ready2Delete) {
+            if (transform.localPosition.z >= MAX_DISTANCE || transform.localPosition.z <= -10.0f || ready2Delete) {
                 bulletActive = false;
                 return true;
             }
@@ -83,7 +85,9 @@ public class Bullet : MonoBehaviour
     private void OnTriggerEnter(Collider other) {
         ready2Delete = true;
         // other.GetComponent<Flasher>().startFlashing();
-        other.GetComponent<HitObject>().getHit(1);
+        if (other.GetComponent<HitObject>()) {
+            other.GetComponent<HitObject>().getHit(1);
+        }
     }
 
     // Update is called once per frame
