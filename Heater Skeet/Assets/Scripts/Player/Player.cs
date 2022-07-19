@@ -11,6 +11,8 @@ public class Player : MonoBehaviour
     [SerializeField]
     LayerMask layerMask;
 
+    public Camera reticleCamera;
+
     private MainInputActions controls;
 
     public TextMeshProUGUI display;
@@ -20,6 +22,7 @@ public class Player : MonoBehaviour
     public Transform reticleTransform;
     public Transform placerReticle;
     public Transform laserSightTransform;
+    public SpriteRenderer reticleSprite;
 
     public float reticleSpeed = 0.45f;
 
@@ -31,6 +34,9 @@ public class Player : MonoBehaviour
 
     private Vector2 moveVelocity;
     private Vector2 reticleVelocity;
+
+    private Quaternion aimRotation = Quaternion.identity;
+    private Vector3 shootTarget;
 
     private float reticleDistance = 1.0f;
 
@@ -73,6 +79,8 @@ public class Player : MonoBehaviour
         // Setup shoot callback
         controls.Playa.Shoot.performed += context => startShoot();
         controls.Playa.Shoot.canceled += context => endShoot();
+
+        shootTarget = playerTransform.position + new Vector3(0.0f, 0.0f, 50.0f);
     }
 
     private void movePlaya(Vector2 direction) {
@@ -101,7 +109,7 @@ public class Player : MonoBehaviour
 
     private void startShoot() {
         if (!shooting) {
-            bulletManager.initializeBullet(BulletType.PlayerBasic, playerTransform.position, reticleTransform.position);
+            bulletManager.initializeBullet(BulletType.PlayerBasic, playerTransform.position, shootTarget /*reticleTransform.position*/);
             shooting = true;
             shotCooldownTimer = 0;
         }
@@ -112,39 +120,49 @@ public class Player : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
-    {
-        // laserSightTransform.position = playerTransform.position;
-        laserSightTransform.LookAt(reticleTransform.GetChild(0));
-        display.text = ""+laserSightTransform.rotation.eulerAngles +": "+
-            Vector3.Distance(playerTransform.position, reticleTransform.position).ToString("0.00");
+    void Update() {
+        display.text = "" + laserSightTransform.rotation.eulerAngles + ": " +
+            Vector3.Distance(playerTransform.position, shootTarget /*reticleTransform.position*/).ToString("0.00");
 
-        if (Physics.Raycast(playerTransform.position, (reticleTransform.position - playerTransform.position), 
+        // Reticle Shit =================================================================
+
+        if (reticleVelocity != Vector2.zero) {
+            laserSightTransform.Rotate(-reticleVelocity.y * reticleSpeed, reticleVelocity.x * reticleSpeed, 0.0f);
+            if (Physics.Raycast(playerTransform.position,
+            laserSightTransform.rotation * Vector3.forward,
             out hitInfo, 100.0f, layerMask, QueryTriggerInteraction.Collide)) {
-            /*
-            Debug.DrawRay(playerTransform.position, (hitInfo.point - playerTransform.position) * 50, Color.red);
-            Debug.DrawLine(playerTransform.position, hitInfo.point, Color.cyan);
-            Debug.Log(hitInfo.collider.name + ": " + hitInfo.point);
-            */
+                shootTarget = hitInfo.point;
+            }
+        } else {
+            laserSightTransform.LookAt(shootTarget);
+        }
+        if (Physics.Raycast(playerTransform.position,
+            laserSightTransform.rotation * Vector3.forward,
+            /*(reticleTransform.position - playerTransform.position),*/
+            out hitInfo, 100.0f, layerMask, QueryTriggerInteraction.Collide)) {
 
             reticleDistance = Vector3.Distance(playerTransform.position,
                 hitInfo.point);
-
-
-            // placerReticle.position = hitInfo.point;
-
-            reticleTransform.position = hitInfo.point;
+            reticleTransform.position = // Camera.main.WorldToScreenPoint(shootTarget);
+                hitInfo.point;
 
             if (hitInfo.transform.gameObject.layer == LayerMask.NameToLayer("Enemy")) {
                 
                 laserSightTransform.GetComponent<Renderer>().material.color = Color.red;
+                reticleSprite.color = Color.red;
             } else {
                 laserSightTransform.GetComponent<Renderer>().material.color = Color.green;
+                reticleSprite.color = Color.green;
             }
+
+            shootTarget = hitInfo.point;
         } else {
             // Debug.DrawRay(playerTransform.position, (reticleTransform.position - playerTransform.position), Color.green);
             laserSightTransform.GetComponent<Renderer>().material.color = Color.green;
+            reticleSprite.color = Color.red;
         }
+
+        // Player Shit =================================================================
 
         playerTransform.localPosition = new Vector3(playerTransform.localPosition.x + moveVelocity.x * PLAYER_SPEED,
             playerTransform.localPosition.y, playerTransform.localPosition.z);
@@ -157,8 +175,13 @@ public class Player : MonoBehaviour
                 playerTransform.localPosition.z);
         }
 
+        /*
         reticleTransform.localPosition = new Vector3(reticleTransform.localPosition.x + reticleVelocity.x * reticleSpeed,
             reticleTransform.localPosition.y + reticleVelocity.y * reticleSpeed, reticleTransform.localPosition.z);
+        */
+
+        
+        
         // Enforce reticle bounds
         
         /*
@@ -199,7 +222,8 @@ public class Player : MonoBehaviour
         if (shooting) {
             shotCooldownTimer++;
             if (shotCooldownTimer > SHOT_COOLDOWN) {
-                bulletManager.initializeBullet(BulletType.PlayerBasic, playerTransform.position, reticleTransform.position);
+                bulletManager.initializeBullet(BulletType.PlayerBasic, playerTransform.position, 
+                    shootTarget /*reticleTransform.position*/);
                 shotCooldownTimer = 0;
             }
         }

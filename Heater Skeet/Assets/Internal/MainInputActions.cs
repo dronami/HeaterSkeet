@@ -136,7 +136,7 @@ public partial class @MainInputActions : IInputActionCollection2, IDisposable
                     ""id"": ""bbf2ef05-6272-4897-91ed-acc5ea45e439"",
                     ""path"": ""<Gamepad>/rightStick"",
                     ""interactions"": """",
-                    ""processors"": """",
+                    ""processors"": ""StickDeadzone"",
                     ""groups"": ""Controller"",
                     ""action"": ""MoveReticle"",
                     ""isComposite"": false,

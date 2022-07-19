@@ -1439,7 +1439,7 @@ GameObject:
   - component: {fileID: 26451909}
   - component: {fileID: 26451911}
   - component: {fileID: 26451910}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -24529,12 +24529,14 @@ MonoBehaviour:
   layerMask:
     serializedVersion: 2
     m_Bits: 384
+  reticleCamera: {fileID: 1606851154}
   display: {fileID: 979191374}
   bulletManager: {fileID: 1388345555}
   playerTransform: {fileID: 1820228944}
   reticleTransform: {fileID: 1839461306}
   placerReticle: {fileID: 26451909}
   laserSightTransform: {fileID: 1380360942}
+  reticleSprite: {fileID: 1839461307}
   reticleSpeed: 1.25
 --- !u!4 &521927176
 Transform:
@@ -64632,7 +64634,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 0
-  orthographic size: 5
+  orthographic size: 1702.36
   m_Depth: 1
   m_CullingMask:
     serializedVersion: 2
@@ -73810,7 +73812,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1839461306}
   - component: {fileID: 1839461307}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Reticle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -73826,7 +73828,7 @@ Transform:
   m_GameObject: {fileID: 1839461305}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: -1, z: 50}
-  m_LocalScale: {x: 5, y: 5, z: 5}
+  m_LocalScale: {x: 4, y: 4, z: 4}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 26451909}
@@ -73874,8 +73876,8 @@ SpriteRenderer:
   m_SortingLayerID: -764024789
   m_SortingLayer: 1
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 44f8e9ba1b278634c9aa782ad561065a, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Sprite: {fileID: 21300000, guid: 74fb880937fd6284f8fde4db03e8828d, type: 3}
+  m_Color: {r: 1, g: 0, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
