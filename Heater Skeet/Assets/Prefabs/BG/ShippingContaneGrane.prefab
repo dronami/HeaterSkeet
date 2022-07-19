@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 214898936232826122}
   - component: {fileID: 3842875485995096751}
   - component: {fileID: 1346670490250096229}
+  - component: {fileID: 3130674440568878461}
   m_Layer: 0
   m_Name: ShippingContaneGrane
   m_TagString: Untagged
@@ -27,7 +28,7 @@ Transform:
   m_GameObject: {fileID: 698244709943087024}
   m_LocalRotation: {x: -0.5, y: 0.5, z: 0.5, w: 0.5}
   m_LocalPosition: {x: 1.78, y: -0.099999905, z: 0.36333334}
-  m_LocalScale: {x: 30.234673, y: 75.078064, z: 16.007372}
+  m_LocalScale: {x: 181.40804, y: 450.46838, z: 16.007372}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -83,3 +84,16 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &3130674440568878461
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 698244709943087024}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.025945008, y: 0.02263152, z: 0.29481685}
+  m_Center: {x: 0, y: 0.0002937908, z: 0.14642611}

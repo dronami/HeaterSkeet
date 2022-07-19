@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 3569735570287700059}
   - component: {fileID: 443010843242407934}
   - component: {fileID: 2432246483061101364}
+  - component: {fileID: 8054075877856089440}
   m_Layer: 0
   m_Name: ShippingContaneBlu
   m_TagString: Untagged
@@ -83,3 +84,16 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &8054075877856089440
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4233928157555815137}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.025945008, y: 0.02263152, z: 0.29481685}
+  m_Center: {x: 0, y: 0.0002937908, z: 0.14642611}

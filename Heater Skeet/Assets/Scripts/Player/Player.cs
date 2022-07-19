@@ -8,6 +8,9 @@ using BulletType = BulletManager.BulletType;
 
 public class Player : MonoBehaviour
 {
+    [SerializeField]
+    LayerMask layerMask;
+
     private MainInputActions controls;
 
     public TextMeshProUGUI display;
@@ -15,15 +18,21 @@ public class Player : MonoBehaviour
 
     public Transform playerTransform;
     public Transform reticleTransform;
+    public Transform placerReticle;
+    public Transform laserSightTransform;
+
+    public float reticleSpeed = 0.45f;
 
     private float PLAYER_SPEED = 0.05f;
-    private float RETICLE_SPEED = 0.45f;
+    // private float RETICLE_SPEED = 0.45f;
 
     private float PLAYER_MAX_X = 3.1f;
     private readonly Vector2 RETICLE_MAX = new Vector2(20.0f, 7.0f);
 
     private Vector2 moveVelocity;
     private Vector2 reticleVelocity;
+
+    private float reticleDistance = 1.0f;
 
     private Vector2 diff;
 
@@ -38,6 +47,8 @@ public class Player : MonoBehaviour
     private bool shooting = false;
     private int shotCooldownTimer;
     private const int SHOT_COOLDOWN = 2;
+
+    RaycastHit hitInfo;
 
     // Start is called before the first frame update
     void Awake()
@@ -103,7 +114,37 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.DrawLine(playerTransform.position, reticleTransform.position, Color.green);
+        // laserSightTransform.position = playerTransform.position;
+        laserSightTransform.LookAt(reticleTransform.GetChild(0));
+        display.text = ""+laserSightTransform.rotation.eulerAngles +": "+
+            Vector3.Distance(playerTransform.position, reticleTransform.position).ToString("0.00");
+
+        if (Physics.Raycast(playerTransform.position, (reticleTransform.position - playerTransform.position), 
+            out hitInfo, 100.0f, layerMask, QueryTriggerInteraction.Collide)) {
+            /*
+            Debug.DrawRay(playerTransform.position, (hitInfo.point - playerTransform.position) * 50, Color.red);
+            Debug.DrawLine(playerTransform.position, hitInfo.point, Color.cyan);
+            Debug.Log(hitInfo.collider.name + ": " + hitInfo.point);
+            */
+
+            reticleDistance = Vector3.Distance(playerTransform.position,
+                hitInfo.point);
+
+
+            // placerReticle.position = hitInfo.point;
+
+            reticleTransform.position = hitInfo.point;
+
+            if (hitInfo.transform.gameObject.layer == LayerMask.NameToLayer("Enemy")) {
+                
+                laserSightTransform.GetComponent<Renderer>().material.color = Color.red;
+            } else {
+                laserSightTransform.GetComponent<Renderer>().material.color = Color.green;
+            }
+        } else {
+            // Debug.DrawRay(playerTransform.position, (reticleTransform.position - playerTransform.position), Color.green);
+            laserSightTransform.GetComponent<Renderer>().material.color = Color.green;
+        }
 
         playerTransform.localPosition = new Vector3(playerTransform.localPosition.x + moveVelocity.x * PLAYER_SPEED,
             playerTransform.localPosition.y, playerTransform.localPosition.z);
@@ -116,9 +157,11 @@ public class Player : MonoBehaviour
                 playerTransform.localPosition.z);
         }
 
-        reticleTransform.localPosition = new Vector3(reticleTransform.localPosition.x + reticleVelocity.x * RETICLE_SPEED,
-            reticleTransform.localPosition.y + reticleVelocity.y * RETICLE_SPEED, reticleTransform.localPosition.z);
+        reticleTransform.localPosition = new Vector3(reticleTransform.localPosition.x + reticleVelocity.x * reticleSpeed,
+            reticleTransform.localPosition.y + reticleVelocity.y * reticleSpeed, reticleTransform.localPosition.z);
         // Enforce reticle bounds
+        
+        /*
         if (reticleTransform.localPosition.x < -RETICLE_MAX.x) {
             reticleTransform.localPosition = new Vector3(-RETICLE_MAX.x, reticleTransform.localPosition.y,
                 reticleTransform.localPosition.z);
@@ -133,6 +176,7 @@ public class Player : MonoBehaviour
             reticleTransform.localPosition = new Vector3(reticleTransform.localPosition.x, RETICLE_MAX.y,
                 reticleTransform.localPosition.z);
         }
+        */
 
         if (jumping) {
             playerTransform.localPosition = new Vector3(playerTransform.localPosition.x, playerTransform.localPosition.y + jumpVelocity,
@@ -145,7 +189,12 @@ public class Player : MonoBehaviour
                 jumpCount = 0;
                 playerTransform.localPosition = new Vector3(playerTransform.localPosition.x, GROUND_Y, playerTransform.localPosition.z);
             }
+        } 
+        /*
+        else if (reticleTransform.position.y < 0.0f) {
+            reticleTransform.position = new Vector3(reticleTransform.position.x, 0.0f, reticleTransform.position.z);
         }
+        */
 
         if (shooting) {
             shotCooldownTimer++;

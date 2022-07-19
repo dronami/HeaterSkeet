@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 4348790481478203257}
   - component: {fileID: 861835094071228636}
   - component: {fileID: 3175368940595727382}
+  - component: {fileID: 6825888425897638035}
   m_Layer: 0
   m_Name: OrangeBarrel
   m_TagString: Untagged
@@ -25,14 +26,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3968182864354995651}
-  m_LocalRotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071067}
+  m_LocalRotation: {x: -0.7069834, y: 0, z: 0, w: 0.7072302}
   m_LocalPosition: {x: -0, y: -1.92, z: 0}
   m_LocalScale: {x: 65, y: 65, z: 92.082275}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -89.98, y: 0, z: 0}
 --- !u!33 &861835094071228636
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -83,3 +84,17 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!136 &6825888425897638035
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3968182864354995651}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  m_Radius: 0.011277579
+  m_Height: 0.0225
+  m_Direction: 2
+  m_Center: {x: 0, y: 0.00021986983, z: -0.00035520634}

@@ -44,10 +44,11 @@ public class WaveManager : MonoBehaviour
             actionIndex++;
             if (actionIndex >= wavePatterns.Length) {
                 actionIndex = 0;
-                isActive = false;
-            } else {
+                // isActive = false;
+            } 
+            // else {
                 nextWave();
-            }
+            // }
         }
     }
 }

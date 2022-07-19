@@ -14,7 +14,7 @@ public class Bullet : MonoBehaviour
     public bool bulletActive = false;
     private bool ready2Delete = false;
 
-    private const float MAX_DISTANCE = 30.0f;
+    private const float MAX_DISTANCE = 50.0f;
 
     private float bulletSpeed;
     private readonly Dictionary<BulletType, float> type2Speed = new Dictionary<BulletType, float>() {

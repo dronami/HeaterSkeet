@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 8915304290286119601}
   - component: {fileID: 5482672473739240724}
   - component: {fileID: 7778467355056329182}
+  - component: {fileID: 899377190607069611}
   m_Layer: 0
   m_Name: ToxicBarrel
   m_TagString: Untagged
@@ -83,3 +84,17 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!136 &899377190607069611
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8138662759886057483}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  m_Radius: 0.011277579
+  m_Height: 0.0225
+  m_Direction: 2
+  m_Center: {x: 0, y: 0.00021986983, z: -0.00035520634}

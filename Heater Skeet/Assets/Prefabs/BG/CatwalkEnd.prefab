@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 6492512351523917776}
   - component: {fileID: 7905455622561480821}
   - component: {fileID: 5355102427659154623}
+  - component: {fileID: 6108832558444990263}
   m_Layer: 0
   m_Name: CatwalkEnd
   m_TagString: Untagged
@@ -83,3 +84,16 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &6108832558444990263
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5859703429673981290}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.023354998, y: 0.028, z: 0.1}
+  m_Center: {x: -0.00044656824, y: 0.0038, z: 0.05}

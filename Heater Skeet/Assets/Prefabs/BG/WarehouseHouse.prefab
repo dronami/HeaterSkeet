@@ -116,6 +116,7 @@ GameObject:
   - component: {fileID: 963440805469433088}
   - component: {fileID: 8038560584714188135}
   - component: {fileID: 8372194035228428654}
+  - component: {fileID: 5353878231820378653}
   m_Layer: 0
   m_Name: Dore
   m_TagString: Untagged
@@ -208,6 +209,19 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!65 &5353878231820378653
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2328637144674108238}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.029625094, y: 0.022881506, z: 0.17179371}
+  m_Center: {x: 0.0018584802, y: -1.5258348e-16, z: -0.08589686}
 --- !u!1 &6190133154595572912
 GameObject:
   m_ObjectHideFlags: 0
@@ -219,6 +233,7 @@ GameObject:
   - component: {fileID: 2366276150107339204}
   - component: {fileID: 2969020838526477792}
   - component: {fileID: 934258398042381257}
+  - component: {fileID: 5868218179199612920}
   m_Layer: 0
   m_Name: Hausu
   m_TagString: Untagged
@@ -291,6 +306,20 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &5868218179199612920
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6190133154595572912}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 7835898234302608625, guid: 7e807fe15aa6b524a851e30bc8eae59e, type: 3}
 --- !u!1 &7342201707940575692
 GameObject:
   m_ObjectHideFlags: 0
