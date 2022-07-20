@@ -12,7 +12,6 @@ public class BulletManager : MonoBehaviour
         Count
     }
 
-    public FXManager fxManager;
     public Transform bulletDaddy;
     public Transform reticleDaddy;
 
@@ -118,7 +117,12 @@ public class BulletManager : MonoBehaviour
                         reticleDaddy.GetChild(bullets[t][bulletIndex].reticleIndex).gameObject.SetActive(false);
                     }
 
-                    fxManager.initializeFX(FXManager.FXType.BulletHitFX, bullets[t][bulletIndex].transform.localPosition);
+                    if (bullets[t][bulletIndex].hitEnemy) {
+                        InternalShit.fxManager.initializeFX(FXManager.FXType.BulletHitFX, bullets[t][bulletIndex].transform.localPosition);
+                    } else {
+                        InternalShit.fxManager.initializeFX(FXManager.FXType.BulletFX, bullets[t][bulletIndex].transform.localPosition);
+                    }
+                    
                 }
             }
 

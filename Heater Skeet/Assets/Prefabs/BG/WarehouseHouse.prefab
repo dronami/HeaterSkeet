@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 227479335502014272}
   - component: {fileID: 5100068591777345685}
   - component: {fileID: 4152733568898237704}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -117,7 +117,7 @@ GameObject:
   - component: {fileID: 8038560584714188135}
   - component: {fileID: 8372194035228428654}
   - component: {fileID: 5353878231820378653}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Dore
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -234,7 +234,7 @@ GameObject:
   - component: {fileID: 2969020838526477792}
   - component: {fileID: 934258398042381257}
   - component: {fileID: 5868218179199612920}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Hausu
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -329,7 +329,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7975713457450263414}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: WarehouseHouse
   m_TagString: Untagged
   m_Icon: {fileID: 0}
