@@ -22,6 +22,8 @@ public class MaterialFlasher : MonoBehaviour
     private int frameCounter = 0;
     private float currentDuration;
 
+    private readonly string COLOR_STRING = "_EmissionColor";
+
     // Start is called before the first frame update
     void Start()
     {
@@ -38,7 +40,7 @@ public class MaterialFlasher : MonoBehaviour
     {
         if (flasherState == FlasherState.FlashingUp) {
             frameCounter++;
-            targetMaterial.SetColor("_EmissionColor", startColos + diffColos * (frameCounter / currentDuration));
+            targetMaterial.SetColor(COLOR_STRING, startColos + diffColos * (frameCounter / currentDuration));
 
             if (frameCounter >= currentDuration) {
                 flasherState = FlasherState.FlashingDown;
@@ -47,7 +49,7 @@ public class MaterialFlasher : MonoBehaviour
             }
         } else if (flasherState == FlasherState.FlashingDown) {
             frameCounter++;
-            targetMaterial.SetColor("_EmissionColor", endColos - diffColos * (frameCounter / currentDuration));
+            targetMaterial.SetColor(COLOR_STRING, endColos - diffColos * (frameCounter / currentDuration));
 
             if (frameCounter >= currentDuration) {
                 flasherState = FlasherState.FlashingUp;

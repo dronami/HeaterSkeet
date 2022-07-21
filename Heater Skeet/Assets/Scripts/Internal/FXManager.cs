@@ -7,13 +7,13 @@ public class FXManager : MonoBehaviour
     public enum FXType {
         BulletFX,
         BulletHitFX,
-        CrateExplode,
+        ExplosionOranj,
+        ExplosionGrane,
+        LilExplosionOranj,
 
         Count
     }
  
-    public Transform fxDaddy;
-
     private int[] currentFX;
     private ParticleSystem[,] fx;
     private int[,] doneIndexes;
@@ -36,7 +36,7 @@ public class FXManager : MonoBehaviour
             currentFX[f] = 0;
             activeFXIndexes[f] = new HashSet<int>();
 
-            for (int b = 0; b < NUM_FX; b++) {
+            for (int b = 0; b < transform.GetChild(f).childCount; b++) {
                 fx[f,b] = transform.GetChild(f).GetChild(b).GetComponent<ParticleSystem>();
             }
         }

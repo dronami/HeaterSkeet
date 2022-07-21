@@ -12,7 +12,9 @@ GameObject:
   - component: {fileID: 861835094071228636}
   - component: {fileID: 3175368940595727382}
   - component: {fileID: 6825888425897638035}
-  m_Layer: 0
+  - component: {fileID: 6042877407336908945}
+  - component: {fileID: 4933595449232250996}
+  m_Layer: 8
   m_Name: OrangeBarrel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -98,3 +100,38 @@ CapsuleCollider:
   m_Height: 0.0225
   m_Direction: 2
   m_Center: {x: 0, y: 0.00021986983, z: -0.00035520634}
+--- !u!114 &6042877407336908945
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3968182864354995651}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 91ab5026e30bacd4d96b085357d74e5d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isEnemy: 0
+  destructionAction: 0
+  explosionType: 2
+  flasher: {fileID: 4933595449232250996}
+  maxHP: 40
+--- !u!114 &4933595449232250996
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3968182864354995651}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f8d9fc6988da77419f07b4d9689a053, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  baseMaterial: {fileID: 2100000, guid: b6d812d63e226e9408056592ed635a27, type: 2}
+  flashDurations: {x: 6, y: 2, z: 6}
+  startColos: {r: 0, g: 0, b: 0, a: 1}
+  endColos: {r: 1, g: 0, b: 0, a: 1}
+  flashRenderers:
+  - {fileID: 3175368940595727382}

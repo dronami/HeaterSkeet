@@ -12,9 +12,12 @@ public class Bullet : MonoBehaviour
 
     private Vector3 bulletVelocity;
     public bool bulletActive = false;
+    public bool hitEnemy = false;
     private bool ready2Delete = false;
 
     private const float MAX_DISTANCE = 50.0f;
+
+    private HitObject otherHit;
 
     private float bulletSpeed;
     private readonly Dictionary<BulletType, float> type2Speed = new Dictionary<BulletType, float>() {
@@ -61,6 +64,7 @@ public class Bullet : MonoBehaviour
 
         bulletActive = true;
         ready2Delete = false;
+        hitEnemy = false;
 
         frameCounter = 0;
     }
@@ -84,9 +88,10 @@ public class Bullet : MonoBehaviour
 
     private void OnTriggerEnter(Collider other) {
         ready2Delete = true;
-        // other.GetComponent<Flasher>().startFlashing();
-        if (other.GetComponent<HitObject>()) {
-            other.GetComponent<HitObject>().getHit(1);
+        otherHit = other.GetComponent<HitObject>();
+        if (otherHit) {
+            otherHit.getHit(1);
+            hitEnemy = otherHit.isEnemy;
         }
     }
 

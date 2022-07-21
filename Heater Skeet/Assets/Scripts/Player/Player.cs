@@ -16,7 +16,6 @@ public class Player : MonoBehaviour
     private MainInputActions controls;
 
     public TextMeshProUGUI display;
-    public BulletManager bulletManager;
 
     public Transform playerTransform;
     public Transform reticleTransform;
@@ -56,9 +55,17 @@ public class Player : MonoBehaviour
 
     RaycastHit hitInfo;
 
+    public Color hitColor = Color.red;
+    public Color missColor = Color.green;
+
+    private const float LASER_SIGHT_SCALE = 50.0f;
+
     // Start is called before the first frame update
     void Awake()
     {
+        InternalShit.bulletManager = FindObjectOfType<BulletManager>();
+        InternalShit.fxManager = FindObjectOfType<FXManager>();
+
         Application.targetFrameRate = 60;
 
         // Instantiate and enable controls object
@@ -109,7 +116,7 @@ public class Player : MonoBehaviour
 
     private void startShoot() {
         if (!shooting) {
-            bulletManager.initializeBullet(BulletType.PlayerBasic, playerTransform.position, shootTarget /*reticleTransform.position*/);
+            InternalShit.bulletManager.initializeBullet(BulletType.PlayerBasic, playerTransform.position, shootTarget /*reticleTransform.position*/);
             shooting = true;
             shotCooldownTimer = 0;
         }
@@ -123,6 +130,7 @@ public class Player : MonoBehaviour
     void Update() {
         display.text = "" + laserSightTransform.rotation.eulerAngles + ": " +
             Vector3.Distance(playerTransform.position, shootTarget /*reticleTransform.position*/).ToString("0.00");
+        reticleSprite.transform.Rotate(0.0f, 0.0f, 5.0f);
 
         // Reticle Shit =================================================================
 
@@ -145,21 +153,23 @@ public class Player : MonoBehaviour
                 hitInfo.point);
             reticleTransform.position = // Camera.main.WorldToScreenPoint(shootTarget);
                 hitInfo.point;
+            laserSightTransform.localScale = new Vector3(laserSightTransform.localScale.x,
+                laserSightTransform.localScale.y, reticleDistance * LASER_SIGHT_SCALE);
 
             if (hitInfo.transform.gameObject.layer == LayerMask.NameToLayer("Enemy")) {
                 
-                laserSightTransform.GetComponent<Renderer>().material.color = Color.red;
-                reticleSprite.color = Color.red;
+                laserSightTransform.GetComponent<Renderer>().material.color = hitColor;
+                reticleSprite.color = hitColor;
             } else {
-                laserSightTransform.GetComponent<Renderer>().material.color = Color.green;
-                reticleSprite.color = Color.green;
+                laserSightTransform.GetComponent<Renderer>().material.color = missColor;
+                reticleSprite.color = missColor;
             }
 
             shootTarget = hitInfo.point;
         } else {
             // Debug.DrawRay(playerTransform.position, (reticleTransform.position - playerTransform.position), Color.green);
-            laserSightTransform.GetComponent<Renderer>().material.color = Color.green;
-            reticleSprite.color = Color.red;
+            laserSightTransform.GetComponent<Renderer>().material.color = missColor;
+            reticleSprite.color = missColor;
         }
 
         // Player Shit =================================================================
@@ -222,8 +232,14 @@ public class Player : MonoBehaviour
         if (shooting) {
             shotCooldownTimer++;
             if (shotCooldownTimer > SHOT_COOLDOWN) {
-                bulletManager.initializeBullet(BulletType.PlayerBasic, playerTransform.position, 
-                    shootTarget /*reticleTransform.position*/);
+                InternalShit.bulletManager.initializeBullet(BulletType.PlayerBasic, playerTransform.position,
+                    shootTarget);
+                /*
+                InternalShit.bulletManager.initializeBullet(BulletType.PlayerBasic, playerTransform.position + new Vector3(0.5f, -0.5f, 0.0f), 
+                    shootTarget);
+                InternalShit.bulletManager.initializeBullet(BulletType.PlayerBasic, playerTransform.position + new Vector3(-0.5f, -0.5f, 0.0f),
+                    shootTarget);
+                */
                 shotCooldownTimer = 0;
             }
         }

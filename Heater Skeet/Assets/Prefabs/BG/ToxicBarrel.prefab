@@ -12,6 +12,8 @@ GameObject:
   - component: {fileID: 5482672473739240724}
   - component: {fileID: 7778467355056329182}
   - component: {fileID: 899377190607069611}
+  - component: {fileID: 6093784393659121154}
+  - component: {fileID: 750920228101571043}
   m_Layer: 0
   m_Name: ToxicBarrel
   m_TagString: Untagged
@@ -98,3 +100,38 @@ CapsuleCollider:
   m_Height: 0.0225
   m_Direction: 2
   m_Center: {x: 0, y: 0.00021986983, z: -0.00035520634}
+--- !u!114 &6093784393659121154
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8138662759886057483}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 91ab5026e30bacd4d96b085357d74e5d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isEnemy: 0
+  destructionAction: 0
+  explosionType: 3
+  flasher: {fileID: 750920228101571043}
+  maxHP: 40
+--- !u!114 &750920228101571043
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8138662759886057483}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f8d9fc6988da77419f07b4d9689a053, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  baseMaterial: {fileID: 2100000, guid: b6d812d63e226e9408056592ed635a27, type: 2}
+  flashDurations: {x: 6, y: 2, z: 6}
+  startColos: {r: 0, g: 0, b: 0, a: 1}
+  endColos: {r: 1, g: 0, b: 0, a: 1}
+  flashRenderers:
+  - {fileID: 7778467355056329182}

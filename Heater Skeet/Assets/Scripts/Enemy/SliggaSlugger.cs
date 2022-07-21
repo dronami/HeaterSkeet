@@ -23,8 +23,6 @@ public class SliggaSlugger : MonoBehaviour
     public Transform shootPoint;
     public Transform playerTransform;
 
-    public BulletManager bulletManager;
-
     public HitObject[] hitObjects;
     public SliggaAction[] sliggaPatterns;
 
@@ -142,7 +140,7 @@ public class SliggaSlugger : MonoBehaviour
         }
 
         if (sliggaState == SliggaState.Shooting) {
-            bulletManager.initializeBullet(BulletType.RealBullet, shootPoint.position, playerTransform.position);
+            InternalShit.bulletManager.initializeBullet(BulletType.RealBullet, shootPoint.position, playerTransform.position);
             animator.SetBool("isShooting", true);
         } else {
             animator.SetBool("isShooting", false);

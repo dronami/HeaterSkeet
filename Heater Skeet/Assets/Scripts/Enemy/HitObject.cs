@@ -4,9 +4,17 @@ using UnityEngine;
 
 public class HitObject : MonoBehaviour
 {
+    public enum DestructionAction {
+        Explode,
+        Animation
+    }
+
+    public bool isEnemy;
+    public DestructionAction destructionAction;
+    public FXManager.FXType explosionType;
+
     public Flasher flasher;
     public int maxHP;
-    public FXManager fxManager;
 
     private int currentHP;
 
@@ -27,7 +35,10 @@ public class HitObject : MonoBehaviour
 
     protected virtual void onHitObjectDestroyed() {
         gameObject.SetActive(false);
-        fxManager.initializeFX(FXManager.FXType.CrateExplode, transform.localPosition);
+        if (destructionAction == DestructionAction.Explode) {
+            InternalShit.fxManager.initializeFX(explosionType, transform.position);
+            gameObject.SetActive(false);
+        }
     }
 
     // Update is called once per frame
