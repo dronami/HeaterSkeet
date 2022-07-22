@@ -94,7 +94,7 @@ CapsuleCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8138662759886057483}
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_Enabled: 1
   m_Radius: 0.011277579
   m_Height: 0.0225
@@ -112,11 +112,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91ab5026e30bacd4d96b085357d74e5d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isActive: 1
   isEnemy: 0
+  hideOnDestroyed: 1
+  explodeOnDestroyed: 1
   destructionAction: 0
   explosionType: 3
   flasher: {fileID: 750920228101571043}
   maxHP: 40
+  hurtFX: []
+  zeroSetters: []
 --- !u!114 &750920228101571043
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -11,6 +11,8 @@ public class FXManager : MonoBehaviour
         ExplosionGrane,
         LilExplosionOranj,
 
+        BloodExplosionGrane,
+
         Count
     }
  
@@ -43,6 +45,8 @@ public class FXManager : MonoBehaviour
     }
 
     public void initializeFX(FXType fxType, Vector3 pos) {
+        Debug.Log(fxType);
+
         int fxIndexStart = currentFX[(int)fxType];
         while (fx[(int)fxType,currentFX[(int)fxType]].gameObject.activeSelf) {
             currentFX[(int)fxType]++;

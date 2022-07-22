@@ -89,7 +89,7 @@ public class Bullet : MonoBehaviour
     private void OnTriggerEnter(Collider other) {
         ready2Delete = true;
         otherHit = other.GetComponent<HitObject>();
-        if (otherHit) {
+        if (otherHit && otherHit.isActive) {
             otherHit.getHit(1);
             hitEnemy = otherHit.isEnemy;
         }

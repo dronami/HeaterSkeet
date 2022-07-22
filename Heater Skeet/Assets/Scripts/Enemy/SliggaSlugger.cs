@@ -84,6 +84,12 @@ public class SliggaSlugger : MonoBehaviour
         }
     }
 
+    public void resetEnemy() {
+        for (int h = 0; h < hitObjects.Length; h++) {
+            hitObjects[h].resetHitObject();
+        }
+    }
+
     private void nextAction() {
         if (sliggaPatterns.Length == 0) return;
 

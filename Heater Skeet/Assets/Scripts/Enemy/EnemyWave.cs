@@ -33,6 +33,7 @@ public class EnemyWave : MonoBehaviour
         currentDuration = waveActions[actionIndex].duration;
 
         if (waveActions[actionIndex].actionType == WaveActionType.Enemy) {
+            waveActions[actionIndex].enemy.resetEnemy();
             waveActions[actionIndex].enemy.startPattern();
         } else if (waveActions[actionIndex].actionType == WaveActionType.Animation) {
             if (waveActions[actionIndex].boolAnimation) {
