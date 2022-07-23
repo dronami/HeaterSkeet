@@ -64,7 +64,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: b6d812d63e226e9408056592ed635a27, type: 2}
+  - {fileID: 2100000, guid: fbe4c5d98f5118b4fb1b5112da8a33df, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -118,6 +118,7 @@ MonoBehaviour:
   explodeOnDestroyed: 1
   destructionAction: 0
   explosionType: 3
+  enemyDaddy: {fileID: 0}
   flasher: {fileID: 750920228101571043}
   maxHP: 40
   hurtFX: []
@@ -134,7 +135,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f8d9fc6988da77419f07b4d9689a053, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  baseMaterial: {fileID: 2100000, guid: b6d812d63e226e9408056592ed635a27, type: 2}
+  baseMaterial: {fileID: 2100000, guid: fbe4c5d98f5118b4fb1b5112da8a33df, type: 2}
   flashDurations: {x: 6, y: 2, z: 6}
   startColos: {r: 0, g: 0, b: 0, a: 1}
   endColos: {r: 1, g: 0, b: 0, a: 1}

@@ -17,6 +17,7 @@ public class HitObject : MonoBehaviour
     public DestructionAction destructionAction;
     public FXManager.FXType explosionType;
 
+    public Sligga enemyDaddy;
     public Flasher flasher;
     public int maxHP;
 
@@ -58,6 +59,10 @@ public class HitObject : MonoBehaviour
             zeroSetters[z].localScale = Vector3.zero;
         }
 
+        if (enemyDaddy != null) {
+            enemyDaddy.startDying();
+        }
+
         /*
         if (destructionAction == DestructionAction.Explode) {
             InternalShit.fxManager.initializeFX(explosionType, transform.position);
@@ -79,8 +84,17 @@ public class HitObject : MonoBehaviour
         }
 
         for (int z = 0; z < zeroSetters.Length; z++) {
+            zeroSetters[z].gameObject.SetActive(true);
             zeroSetters[z].localScale = Vector3.one;
         }
+    }
+
+    public void disableHitObject() {
+        for (int h = 0; h < hurtFX.Length; h++) {
+            hurtFX[h].gameObject.SetActive(false);
+        }
+
+        gameObject.SetActive(false);
     }
 
     // Update is called once per frame

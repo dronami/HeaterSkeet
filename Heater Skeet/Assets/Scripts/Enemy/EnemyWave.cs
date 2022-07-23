@@ -34,6 +34,7 @@ public class EnemyWave : MonoBehaviour
 
         if (waveActions[actionIndex].actionType == WaveActionType.Enemy) {
             waveActions[actionIndex].enemy.resetEnemy();
+            waveActions[actionIndex].enemy.gameObject.SetActive(true);
             waveActions[actionIndex].enemy.startPattern();
         } else if (waveActions[actionIndex].actionType == WaveActionType.Animation) {
             if (waveActions[actionIndex].boolAnimation) {

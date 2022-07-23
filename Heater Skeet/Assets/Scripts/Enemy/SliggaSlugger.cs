@@ -4,46 +4,46 @@ using UnityEngine;
 
 using BulletType = BulletManager.BulletType;
 
-public class SliggaSlugger : MonoBehaviour
-{
-    public enum SliggaState {
-        Waiting,
-        Idle,
-        Rotating,
-        Running,
-        Aiming,
-        Cocking,
-        Shooting
-    }
-
-    public SliggaState sliggaState;
-    public Animator animator;
-    public LookAtter aimLooker;
+public class SliggaSlugger : Sligga
+{ 
     public LookAtter[] eyeLookers;
-    public Transform shootPoint;
-    public Transform playerTransform;
 
-    public HitObject[] hitObjects;
-    public SliggaAction[] sliggaPatterns;
+    private const float shrinkDuration = 30.0f;
+    private float currentScale;
 
-    private int actionIndex;
-    private int stateCounter;
-    private int currentDuration;
-    private Vector3 startPosition;
-    private Vector3 endPosition;
-
-    private bool rotating = false;
-    private int rotationCounter;
-    private int rotationDuration;
-    private Quaternion startRotation;
-    private Quaternion endRotation;
-
-    private bool isActive = false;
+    private readonly string INITIAL_ANIMATION_NAME = "1Gun-Idle";
+    private readonly string[] DEATH_ANIMATION_NAMES = new string[] {
+        "1Gun-DyingA"
+    };
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        startPos = transform.position;
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        if (!isActive || sliggaPatterns.Length == 0) return;
+
+        if (sliggaState == SliggaState.Dying) {
+
+        } else if (sliggaState == SliggaState.DyingShrinking) {
+            stateCounter++;
+            currentScale = 1.0f - (stateCounter / shrinkDuration);
+            transform.localScale = new Vector3(currentScale, currentScale, currentScale);
+
+            if (stateCounter >= shrinkDuration) {
+                sliggaState = SliggaState.Dead;
+                transform.position = startPos;
+                gameObject.SetActive(false);
+            }
+        } else if (sliggaState == SliggaState.Dead) {
+
+        } else {
+            basicUpdate();
+        }
     }
 
     public void startPattern() {
@@ -52,69 +52,13 @@ public class SliggaSlugger : MonoBehaviour
         isActive = true;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        if (!isActive || sliggaPatterns.Length == 0) return;
+    protected override void nextAction() {
+        if (sliggaPatterns.Length == 0
+            || sliggaState == SliggaState.Dying
+            || sliggaState == SliggaState.DyingShrinking
+            || sliggaState == SliggaState.Dead) return;
 
-        stateCounter++;
-
-        if (sliggaState == SliggaState.Running) {
-            transform.position = Vector3.Lerp(startPosition, endPosition, stateCounter / (float)currentDuration);
-        }
-
-        if (rotating) {
-            rotationCounter++;
-            transform.rotation = Quaternion.Lerp(startRotation, endRotation, rotationCounter / (float)rotationDuration);
-
-            if (rotationCounter >= rotationDuration) {
-                rotating = false;
-            }
-        }
-
-        stateCounter++;
-        if (stateCounter >= currentDuration) {
-            actionIndex++;
-            if (actionIndex >= sliggaPatterns.Length) {
-                actionIndex = 0;
-                isActive = false;
-            } else {
-                nextAction();
-            }
-        }
-    }
-
-    public void resetEnemy() {
-        for (int h = 0; h < hitObjects.Length; h++) {
-            hitObjects[h].resetHitObject();
-        }
-    }
-
-    private void nextAction() {
-        if (sliggaPatterns.Length == 0) return;
-
-        stateCounter = 0;
-        sliggaState = sliggaPatterns[actionIndex].actionState;
-        currentDuration = (int)(sliggaPatterns[actionIndex].duration * 60);
-        if (sliggaPatterns[actionIndex].startTransform != null) {
-            startPosition = sliggaPatterns[actionIndex].startTransform.position;
-            transform.position = startPosition;
-        }
-        if (sliggaPatterns[actionIndex].endTransform != null) {
-            endPosition = sliggaPatterns[actionIndex].endTransform.position;
-        }
-
-        if (sliggaPatterns[actionIndex].rotationDuration > 0.0f) {
-            transform.rotation = Quaternion.Euler(0.0f, sliggaPatterns[actionIndex].startRotation, 0.0f);
-            rotating = true;
-            rotationCounter = 0;
-            rotationDuration = (int)(sliggaPatterns[actionIndex].rotationDuration * 60);
-            startRotation = Quaternion.Euler(0.0f, sliggaPatterns[actionIndex].startRotation, 0.0f);
-            endRotation = Quaternion.Euler(0.0f, sliggaPatterns[actionIndex].endRotation, 0.0f);
-        }
-        if (sliggaState == SliggaState.Idle) {
-            aimLooker.enableRotation(false);
-        }
+        basicNextAction();
         
         if (sliggaState == SliggaState.Running) {
             for (int e = 0; e < eyeLookers.Length; e++) {
@@ -151,6 +95,27 @@ public class SliggaSlugger : MonoBehaviour
         } else {
             animator.SetBool("isShooting", false);
         }
+    }
+
+    public override void startDying() {
+        base.startDying();
+
+        animator.Play(DEATH_ANIMATION_NAMES[0]);
+        aimLooker.isActive = false;
+    }
+
+    public override void startShrinking() {
+        base.startShrinking();
+        for (int h = 0; h < hitObjects.Length; h++) {
+            hitObjects[h].disableHitObject();
+        }
+    }
+
+    public override void resetEnemy() {
+        base.resetEnemy();
+
+        sliggaState = SliggaState.Idle;
+        animator.Play(INITIAL_ANIMATION_NAME);
     }
 }
 
