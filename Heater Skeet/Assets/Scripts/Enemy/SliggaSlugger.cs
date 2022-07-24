@@ -11,9 +11,14 @@ public class SliggaSlugger : Sligga
     private const float shrinkDuration = 30.0f;
     private float currentScale;
 
+    private int stalkCount;
+
     private readonly string INITIAL_ANIMATION_NAME = "1Gun-Idle";
     private readonly string[] DEATH_ANIMATION_NAMES = new string[] {
         "1Gun-DyingA"
+    };
+    private readonly string[] STALK_DEATH_ANIMATION_NAMES = new string[] {
+        "1Gun-StalkDyingA"
     };
 
     // Start is called before the first frame update
@@ -100,8 +105,28 @@ public class SliggaSlugger : Sligga
     public override void startDying() {
         base.startDying();
 
+        for (int e = 0; e < eyeLookers.Length; e++) {
+            eyeLookers[e].isActive = false;
+            eyeLookers[e].transform.localRotation = Quaternion.identity;
+        }
+
         animator.Play(DEATH_ANIMATION_NAMES[0]);
         aimLooker.isActive = false;
+    }
+
+    public override void onStalkDestroyed() {
+        stalkCount--;
+        if (stalkCount <= 0) {
+            base.startDying();
+
+            for (int e = 0; e < eyeLookers.Length; e++) {
+                eyeLookers[e].isActive = false;
+                eyeLookers[e].transform.localRotation = Quaternion.identity;
+            }
+
+            animator.Play(STALK_DEATH_ANIMATION_NAMES[0]);
+            aimLooker.isActive = false;
+        }
     }
 
     public override void startShrinking() {
@@ -116,6 +141,8 @@ public class SliggaSlugger : Sligga
 
         sliggaState = SliggaState.Idle;
         animator.Play(INITIAL_ANIMATION_NAME);
+
+        stalkCount = 2;
     }
 }
 

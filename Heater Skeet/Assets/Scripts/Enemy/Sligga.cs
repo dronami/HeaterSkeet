@@ -129,6 +129,10 @@ public class Sligga : MonoBehaviour
         sliggaState = SliggaState.DyingShrinking;
     }
 
+    public virtual void onStalkDestroyed() {
+
+    }
+
     // Update is called once per frame
     void Update()
     {

@@ -12,6 +12,7 @@ public class HitObject : MonoBehaviour
 
     public bool isActive = true;
     public bool isEnemy;
+    public bool isStalk = false;
     public bool hideOnDestroyed = false;
     public bool explodeOnDestroyed = false;
     public DestructionAction destructionAction;
@@ -60,7 +61,11 @@ public class HitObject : MonoBehaviour
         }
 
         if (enemyDaddy != null) {
-            enemyDaddy.startDying();
+            if (isStalk) {
+                enemyDaddy.onStalkDestroyed();
+            } else {
+                enemyDaddy.startDying();
+            }
         }
 
         /*

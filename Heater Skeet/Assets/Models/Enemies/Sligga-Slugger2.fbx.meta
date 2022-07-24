@@ -57,6 +57,18 @@ ModelImporter:
   - first:
       74: -8377805235137578449
     second: Armature.002|1Gun-StopAim
+  - first:
+      74: 3214178693165297224
+    second: Armature.002|1Gun-StalkDeadA
+  - first:
+      74: 6075704120387754439
+    second: Armature.002|1Gun-StalkDyingA
+  - first:
+      74: 2249642559552852493
+    second: 1Gun-StalkDyingA.001
+  - first:
+      74: -7145445635027921330
+    second: 1Gun-StalkDeadA
   externalObjects: {}
   materials:
     materialImportMode: 2
