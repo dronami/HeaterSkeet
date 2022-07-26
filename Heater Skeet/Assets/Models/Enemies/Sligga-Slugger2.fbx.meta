@@ -69,6 +69,33 @@ ModelImporter:
   - first:
       74: -7145445635027921330
     second: 1Gun-StalkDeadA
+  - first:
+      74: 2031943199952120690
+    second: Armature.002|NoGun-DeadA
+  - first:
+      74: 2749772589529368288
+    second: Armature.002|NoGun-DyingA
+  - first:
+      74: 3100878821420413112
+    second: Armature.002|NoGun-FlipOff
+  - first:
+      74: 7623045007519171611
+    second: Armature.002|NoGun-FlippedOff
+  - first:
+      74: -5700187196621413921
+    second: Armature.002|NoGun-Idle
+  - first:
+      74: 1720870633667037929
+    second: Armature.002|NoGun-Run
+  - first:
+      74: 6171678262531061872
+    second: Armature.002|NoGun-StalkDyingA
+  - first:
+      74: -3251470612210776402
+    second: Armature.002|NoGun-StopFlipOff
+  - first:
+      74: -429303449796639119
+    second: Armature.002|NoGun-FlippedOffHurt
   externalObjects: {}
   materials:
     materialImportMode: 2

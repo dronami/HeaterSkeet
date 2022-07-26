@@ -6,13 +6,40 @@ using BulletType = BulletManager.BulletType;
 
 public class SliggaSlugger : Sligga
 { 
+    public enum SliggaSluggerType {
+        OneGunner,
+        FlipOffer
+    }
+
+    public SliggaSluggerType sliggaType;
+
     public LookAtter[] eyeLookers;
+    public Transform gunTransformLeft;
 
     private const float shrinkDuration = 30.0f;
     private float currentScale;
 
     private int stalkCount;
 
+    private readonly Dictionary<SliggaSluggerType, string> type2InitialAnimation 
+        = new Dictionary<SliggaSluggerType, string>() {
+        { SliggaSluggerType.OneGunner, "1Gun-Idle" },
+        { SliggaSluggerType.FlipOffer, "NoGun-Idle" },
+    };
+
+    private readonly Dictionary<SliggaSluggerType, string> type2DyingAnimation
+        = new Dictionary<SliggaSluggerType, string>() {
+        { SliggaSluggerType.OneGunner, "1Gun-DyingA" },
+        { SliggaSluggerType.FlipOffer, "NoGun-DyingA" },
+    };
+
+    private readonly Dictionary<SliggaSluggerType, string> type2StalkDyingAnimation
+        = new Dictionary<SliggaSluggerType, string>() {
+        { SliggaSluggerType.OneGunner, "1Gun-StalkDyingA" },
+        { SliggaSluggerType.FlipOffer, "NoGun-StalkDyingA" },
+    };
+
+    /*
     private readonly string INITIAL_ANIMATION_NAME = "1Gun-Idle";
     private readonly string[] DEATH_ANIMATION_NAMES = new string[] {
         "1Gun-DyingA"
@@ -20,6 +47,7 @@ public class SliggaSlugger : Sligga
     private readonly string[] STALK_DEATH_ANIMATION_NAMES = new string[] {
         "1Gun-StalkDyingA"
     };
+    */
 
     // Start is called before the first frame update
     void Start()
@@ -49,6 +77,21 @@ public class SliggaSlugger : Sligga
         } else {
             basicUpdate();
         }
+    }
+
+    public override void resetEnemy() {
+        base.resetEnemy();
+
+        sliggaState = SliggaState.Idle;
+        animator.Play(type2InitialAnimation[sliggaType]);
+
+        if (sliggaType == SliggaSluggerType.OneGunner) {
+            gunTransformLeft.gameObject.SetActive(true);
+        } else if (sliggaType == SliggaSluggerType.FlipOffer) {
+            gunTransformLeft.gameObject.SetActive(false);
+        }
+
+        stalkCount = 2;
     }
 
     public void startPattern() {
@@ -110,7 +153,7 @@ public class SliggaSlugger : Sligga
             eyeLookers[e].transform.localRotation = Quaternion.identity;
         }
 
-        animator.Play(DEATH_ANIMATION_NAMES[0]);
+        animator.Play(type2DyingAnimation[sliggaType]);
         aimLooker.isActive = false;
     }
 
@@ -124,7 +167,7 @@ public class SliggaSlugger : Sligga
                 eyeLookers[e].transform.localRotation = Quaternion.identity;
             }
 
-            animator.Play(STALK_DEATH_ANIMATION_NAMES[0]);
+            animator.Play(type2StalkDyingAnimation[sliggaType]);
             aimLooker.isActive = false;
         }
     }
@@ -134,15 +177,6 @@ public class SliggaSlugger : Sligga
         for (int h = 0; h < hitObjects.Length; h++) {
             hitObjects[h].disableHitObject();
         }
-    }
-
-    public override void resetEnemy() {
-        base.resetEnemy();
-
-        sliggaState = SliggaState.Idle;
-        animator.Play(INITIAL_ANIMATION_NAME);
-
-        stalkCount = 2;
     }
 }
 

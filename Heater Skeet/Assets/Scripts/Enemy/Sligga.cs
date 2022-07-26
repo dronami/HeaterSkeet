@@ -13,6 +13,7 @@ public class Sligga : MonoBehaviour
         Cocking,
         Shooting,
 
+        Hurting,
         Dying,
         DyingShrinking,
         Dead
@@ -64,11 +65,21 @@ public class Sligga : MonoBehaviour
         }
 
         if (sliggaPatterns[actionIndex].rotationDuration > 0.0f) {
-            transform.rotation = Quaternion.Euler(0.0f, sliggaPatterns[actionIndex].startRotation, 0.0f);
             rotating = true;
             rotationCounter = 0;
             rotationDuration = (int)(sliggaPatterns[actionIndex].rotationDuration * 60);
-            startRotation = Quaternion.Euler(0.0f, sliggaPatterns[actionIndex].startRotation, 0.0f);
+            if (sliggaPatterns[actionIndex].startRotation == -999.0f) {
+                if (aimLooker.applyOffset) {
+                    startRotation = Quaternion.Euler(aimLooker.transform.rotation.eulerAngles.x + aimLooker.offset.x,
+                    aimLooker.transform.rotation.eulerAngles.y + aimLooker.offset.y,
+                    aimLooker.transform.rotation.eulerAngles.z + aimLooker.offset.z);
+                } else {
+                    startRotation = aimLooker.transform.rotation;
+                }
+            } else {
+                transform.rotation = Quaternion.Euler(0.0f, sliggaPatterns[actionIndex].startRotation, 0.0f);
+                startRotation = Quaternion.Euler(0.0f, sliggaPatterns[actionIndex].startRotation, 0.0f);
+            }
             endRotation = Quaternion.Euler(0.0f, sliggaPatterns[actionIndex].endRotation, 0.0f);
         }
         if (sliggaState == SliggaState.Idle) {
