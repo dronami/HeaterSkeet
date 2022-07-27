@@ -100,6 +100,7 @@ MonoBehaviour:
   - {fileID: 1774577609}
   gunTransformLeft: {fileID: 543450652403360558}
   flipOffHitObject: {fileID: 0}
+  isEscaping: 0
 --- !u!114 &8797373786717993564
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -696,7 +697,7 @@ MonoBehaviour:
   explosionType: 0
   enemyDaddy: {fileID: 5775252756969705213}
   flasher: {fileID: 1611857662}
-  maxHP: 10
+  maxHP: 5
   hurtFX: []
   zeroSetters: []
 --- !u!1 &3452321231860746610 stripped
@@ -757,7 +758,7 @@ MonoBehaviour:
   explosionType: 5
   enemyDaddy: {fileID: 5775252756969705213}
   flasher: {fileID: 1359301363}
-  maxHP: 4
+  maxHP: 2
   hurtFX:
   - {fileID: 2610348222008985010}
   zeroSetters:
@@ -847,7 +848,7 @@ MonoBehaviour:
   explosionType: 5
   enemyDaddy: {fileID: 5775252756969705213}
   flasher: {fileID: 465287696}
-  maxHP: 4
+  maxHP: 2
   hurtFX:
   - {fileID: 2610348221977898886}
   zeroSetters:

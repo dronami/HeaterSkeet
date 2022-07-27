@@ -23,6 +23,8 @@ public class SliggaSlugger : Sligga
     private float currentScale;
 
     private int stalkCount;
+    private int cachedHitObjectCount;
+    private int[] cachedHitObjects;
 
     private readonly string HAND_HURT_STRING = "NoGun-FlippedOffHurt";
 
@@ -58,6 +60,7 @@ public class SliggaSlugger : Sligga
     void Start()
     {
         startPos = transform.position;
+        cachedHitObjects = new int[hitObjects.Length];
     }
 
     // Update is called once per frame
@@ -168,12 +171,36 @@ public class SliggaSlugger : Sligga
         } else if (bodyPartType == HitObject.BodyPart.ArmLeft
             || bodyPartType == HitObject.BodyPart.ArmRight) {
             animator.Play(HAND_HURT_STRING);
+
+            setInvincible(true);
+
             isActive = false;
         }
     }
 
+    protected void setInvincible(bool i) {
+        
+        if (i) {
+            cachedHitObjectCount = 0;
+            for (int h = 0; h < hitObjects.Length; h++) {
+                if (hitObjects[h].isActive) {
+                    cachedHitObjects[cachedHitObjectCount] = h;
+                    hitObjects[h].isActive = false;
+
+                    cachedHitObjectCount++;
+                }
+            }
+        } else {
+            for (int h = 0; h < cachedHitObjectCount; h++) {
+                hitObjects[cachedHitObjects[h]].isActive = true;
+            }
+        }
+    }
+
     public override void startDying() {
-        Debug.Log("Death Angle: " + (aimLooker.targetTransform.rotation.eulerAngles.y - transform.rotation.eulerAngles.y));
+        Vector3 angleBetwane = transform.position - aimLooker.targetTransform.position;
+        Quaternion ratty = Quaternion.Euler(0.0f, angleBetwane.y, 0.0f);
+        Debug.Log(name+": "+aimLooker.targetTransform.name+": " + ratty.eulerAngles);
         base.startDying();
 
         for (int e = 0; e < eyeLookers.Length; e++) {
@@ -218,6 +245,8 @@ public class SliggaSlugger : Sligga
         actionIndex = 5;
         isActive = true;
         nextAction();
+
+        setInvincible(false);
     }
 }
 
