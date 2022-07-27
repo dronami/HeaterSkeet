@@ -99,6 +99,8 @@ MonoBehaviour:
   - {fileID: 211046618}
   - {fileID: 1774577609}
   gunTransformLeft: {fileID: 543450652403360558}
+  flipOffHitObject: {fileID: 0}
+  isEscaping: 0
 --- !u!114 &8797373786717993564
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -625,11 +627,16 @@ MonoBehaviour:
   isActive: 1
   targetTransform: {fileID: 0}
   applyOffset: 1
-  offset: {x: 0, y: 180, z: 0}
+  offset: {x: -90, y: 0, z: 0}
   instaRotation: 1
 --- !u!4 &1146967208537495506 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1146967207207046662, guid: c939166d2e8b416418f530aafd9f6a1f, type: 3}
+  m_PrefabInstance: {fileID: 1937709524}
+  m_PrefabAsset: {fileID: 0}
+--- !u!137 &1205922465043414581 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -8017449571587430431, guid: c939166d2e8b416418f530aafd9f6a1f, type: 3}
   m_PrefabInstance: {fileID: 1937709524}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &2223042631699742552 stripped
@@ -667,8 +674,7 @@ MonoBehaviour:
   startColos: {r: 0, g: 0, b: 0, a: 1}
   endColos: {r: 1, g: 0, b: 0, a: 1}
   flashRenderers:
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 1205922465043414581}
 --- !u!114 &1611857663
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -686,11 +692,12 @@ MonoBehaviour:
   isStalk: 0
   hideOnDestroyed: 0
   explodeOnDestroyed: 0
+  bodyPartType: 0
   destructionAction: 0
   explosionType: 0
   enemyDaddy: {fileID: 5775252756969705213}
-  flasher: {fileID: 0}
-  maxHP: 10
+  flasher: {fileID: 1611857662}
+  maxHP: 5
   hurtFX: []
   zeroSetters: []
 --- !u!1 &3452321231860746610 stripped
@@ -728,10 +735,7 @@ MonoBehaviour:
   startColos: {r: 0, g: 0, b: 0, a: 1}
   endColos: {r: 1, g: 0, b: 0, a: 1}
   flashRenderers:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 1205922465043414581}
 --- !u!114 &1359301364
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -749,11 +753,12 @@ MonoBehaviour:
   isStalk: 1
   hideOnDestroyed: 0
   explodeOnDestroyed: 1
+  bodyPartType: 4
   destructionAction: 2
   explosionType: 5
   enemyDaddy: {fileID: 5775252756969705213}
-  flasher: {fileID: 0}
-  maxHP: 4
+  flasher: {fileID: 1359301363}
+  maxHP: 2
   hurtFX:
   - {fileID: 2610348222008985010}
   zeroSetters:
@@ -783,7 +788,7 @@ MonoBehaviour:
   isActive: 1
   targetTransform: {fileID: 0}
   applyOffset: 1
-  offset: {x: 0, y: 180, z: 0}
+  offset: {x: -90, y: 0, z: 0}
   instaRotation: 1
 --- !u!1 &4773091834086270485 stripped
 GameObject:
@@ -820,10 +825,7 @@ MonoBehaviour:
   startColos: {r: 0, g: 0, b: 0, a: 1}
   endColos: {r: 1, g: 0, b: 0, a: 1}
   flashRenderers:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 1205922465043414581}
 --- !u!114 &465287697
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -841,11 +843,12 @@ MonoBehaviour:
   isStalk: 1
   hideOnDestroyed: 0
   explodeOnDestroyed: 1
+  bodyPartType: 3
   destructionAction: 2
   explosionType: 5
   enemyDaddy: {fileID: 5775252756969705213}
-  flasher: {fileID: 0}
-  maxHP: 4
+  flasher: {fileID: 465287696}
+  maxHP: 2
   hurtFX:
   - {fileID: 2610348221977898886}
   zeroSetters:

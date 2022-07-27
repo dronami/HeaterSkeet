@@ -16,6 +16,10 @@ public class SliggaLink : MonoBehaviour
         sligga.startShrinking();
     }
 
+    public void finishHandExplode() {
+        sligga.finishHandExplode();
+    }
+
     // Update is called once per frame
     void Update()
     {
