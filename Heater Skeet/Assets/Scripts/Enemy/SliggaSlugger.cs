@@ -15,11 +15,16 @@ public class SliggaSlugger : Sligga
 
     public LookAtter[] eyeLookers;
     public Transform gunTransformLeft;
+    public HitObject flipOffHitObject;
+
+    public bool isEscaping = false;
 
     private const float shrinkDuration = 30.0f;
     private float currentScale;
 
     private int stalkCount;
+
+    private readonly string HAND_HURT_STRING = "NoGun-FlippedOffHurt";
 
     private readonly Dictionary<SliggaSluggerType, string> type2InitialAnimation 
         = new Dictionary<SliggaSluggerType, string>() {
@@ -58,11 +63,9 @@ public class SliggaSlugger : Sligga
     // Update is called once per frame
     void Update()
     {
-        if (!isActive || sliggaPatterns.Length == 0) return;
+        if (isPaused) return;
 
-        if (sliggaState == SliggaState.Dying) {
-
-        } else if (sliggaState == SliggaState.DyingShrinking) {
+        if (sliggaState == SliggaState.DyingShrinking) {
             stateCounter++;
             currentScale = 1.0f - (stateCounter / shrinkDuration);
             transform.localScale = new Vector3(currentScale, currentScale, currentScale);
@@ -72,6 +75,12 @@ public class SliggaSlugger : Sligga
                 transform.position = startPos;
                 gameObject.SetActive(false);
             }
+        }
+
+        if (!isActive || sliggaPatterns.Length == 0) return;
+
+        if (sliggaState == SliggaState.Dying) {
+
         } else if (sliggaState == SliggaState.Dead) {
 
         } else {
@@ -89,6 +98,7 @@ public class SliggaSlugger : Sligga
             gunTransformLeft.gameObject.SetActive(true);
         } else if (sliggaType == SliggaSluggerType.FlipOffer) {
             gunTransformLeft.gameObject.SetActive(false);
+            flipOffHitObject.isActive = false;
         }
 
         stalkCount = 2;
@@ -143,9 +153,27 @@ public class SliggaSlugger : Sligga
         } else {
             animator.SetBool("isShooting", false);
         }
+
+        if (sliggaType == SliggaSluggerType.FlipOffer) {
+            flipOffHitObject.isActive = (sliggaState == SliggaState.Cocking || sliggaState == SliggaState.Aiming);
+        }
+    }
+
+    public override void onHitObjectDestroyed(HitObject.BodyPart bodyPartType) {
+        if (bodyPartType == HitObject.BodyPart.Body) {
+            startDying();
+        } else if (bodyPartType == HitObject.BodyPart.StalkLeft
+            || bodyPartType == HitObject.BodyPart.StalkRight) {
+            onStalkDestroyed();
+        } else if (bodyPartType == HitObject.BodyPart.ArmLeft
+            || bodyPartType == HitObject.BodyPart.ArmRight) {
+            animator.Play(HAND_HURT_STRING);
+            isActive = false;
+        }
     }
 
     public override void startDying() {
+        Debug.Log("Death Angle: " + (aimLooker.targetTransform.rotation.eulerAngles.y - transform.rotation.eulerAngles.y));
         base.startDying();
 
         for (int e = 0; e < eyeLookers.Length; e++) {
@@ -157,7 +185,7 @@ public class SliggaSlugger : Sligga
         aimLooker.isActive = false;
     }
 
-    public override void onStalkDestroyed() {
+    public void onStalkDestroyed() {
         stalkCount--;
         if (stalkCount <= 0) {
             base.startDying();
@@ -167,16 +195,29 @@ public class SliggaSlugger : Sligga
                 eyeLookers[e].transform.localRotation = Quaternion.identity;
             }
 
+            for (int h = 0; h < hitObjects.Length; h++) {
+                hitObjects[h].disableHitObject();
+            }
+
             animator.Play(type2StalkDyingAnimation[sliggaType]);
             aimLooker.isActive = false;
         }
     }
 
     public override void startShrinking() {
+        isActive = false;
+
         base.startShrinking();
         for (int h = 0; h < hitObjects.Length; h++) {
             hitObjects[h].disableHitObject();
         }
+    }
+
+    public override void finishHandExplode() {
+        animator.Play(type2InitialAnimation[sliggaType]);
+        actionIndex = 5;
+        isActive = true;
+        nextAction();
     }
 }
 

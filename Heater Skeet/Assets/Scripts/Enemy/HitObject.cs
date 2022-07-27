@@ -10,11 +10,20 @@ public class HitObject : MonoBehaviour
         SplurtNShrink
     }
 
+    public enum BodyPart {
+        Body,
+        ArmLeft,
+        ArmRight,
+        StalkLeft,
+        StalkRight
+    }
+
     public bool isActive = true;
     public bool isEnemy;
     public bool isStalk = false;
     public bool hideOnDestroyed = false;
     public bool explodeOnDestroyed = false;
+    public BodyPart bodyPartType;
     public DestructionAction destructionAction;
     public FXManager.FXType explosionType;
 
@@ -61,11 +70,14 @@ public class HitObject : MonoBehaviour
         }
 
         if (enemyDaddy != null) {
+            enemyDaddy.onHitObjectDestroyed(bodyPartType);
+            /*
             if (isStalk) {
                 enemyDaddy.onStalkDestroyed();
             } else {
                 enemyDaddy.startDying();
             }
+            */
         }
 
         /*

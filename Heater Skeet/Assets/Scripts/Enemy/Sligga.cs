@@ -44,6 +44,7 @@ public class Sligga : MonoBehaviour
     protected Quaternion startRotation;
     protected Quaternion endRotation;
 
+    protected bool isPaused = false;
     protected bool isActive = false;
 
     // Start is called before the first frame update
@@ -140,7 +141,17 @@ public class Sligga : MonoBehaviour
         sliggaState = SliggaState.DyingShrinking;
     }
 
+    public virtual void finishHandExplode() {
+
+    }
+
+    /*
     public virtual void onStalkDestroyed() {
+
+    }
+    */
+
+    public virtual void onHitObjectDestroyed(HitObject.BodyPart bodyPartType) {
 
     }
 

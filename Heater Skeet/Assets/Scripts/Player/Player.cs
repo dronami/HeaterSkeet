@@ -130,7 +130,7 @@ public class Player : MonoBehaviour
     void Update() {
         display.text = "" + laserSightTransform.rotation.eulerAngles + ": " +
             Vector3.Distance(playerTransform.position, shootTarget /*reticleTransform.position*/).ToString("0.00");
-        reticleSprite.transform.Rotate(0.0f, 0.0f, 5.0f);
+        // reticleSprite.transform.Rotate(0.0f, 0.0f, 5.0f);
 
         // Reticle Shit =================================================================
 
