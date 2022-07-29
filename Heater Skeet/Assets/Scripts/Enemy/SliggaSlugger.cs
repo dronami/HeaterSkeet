@@ -16,6 +16,7 @@ public class SliggaSlugger : Sligga
     public LookAtter[] eyeLookers;
     public Transform gunTransformLeft;
     public HitObject flipOffHitObject;
+    public Transform handExplosion;
 
     public bool isEscaping = false;
 
@@ -102,6 +103,7 @@ public class SliggaSlugger : Sligga
         } else if (sliggaType == SliggaSluggerType.FlipOffer) {
             gunTransformLeft.gameObject.SetActive(false);
             flipOffHitObject.isActive = false;
+            handExplosion.gameObject.SetActive(false);
         }
 
         stalkCount = 2;
@@ -162,22 +164,6 @@ public class SliggaSlugger : Sligga
         }
     }
 
-    public override void onHitObjectDestroyed(HitObject.BodyPart bodyPartType) {
-        if (bodyPartType == HitObject.BodyPart.Body) {
-            startDying();
-        } else if (bodyPartType == HitObject.BodyPart.StalkLeft
-            || bodyPartType == HitObject.BodyPart.StalkRight) {
-            onStalkDestroyed();
-        } else if (bodyPartType == HitObject.BodyPart.ArmLeft
-            || bodyPartType == HitObject.BodyPart.ArmRight) {
-            animator.Play(HAND_HURT_STRING);
-
-            setInvincible(true);
-
-            isActive = false;
-        }
-    }
-
     protected void setInvincible(bool i) {
         
         if (i) {
@@ -194,6 +180,28 @@ public class SliggaSlugger : Sligga
             for (int h = 0; h < cachedHitObjectCount; h++) {
                 hitObjects[cachedHitObjects[h]].isActive = true;
             }
+        }
+    }
+
+    public override void onHitObjectDestroyed(HitObject.BodyPart bodyPartType) {
+        if (bodyPartType == HitObject.BodyPart.Body) {
+            startDying();
+        } else if (bodyPartType == HitObject.BodyPart.StalkLeft
+            || bodyPartType == HitObject.BodyPart.StalkRight) {
+            onStalkDestroyed();
+        } else if (bodyPartType == HitObject.BodyPart.ArmLeft
+            || bodyPartType == HitObject.BodyPart.ArmRight) {
+            animator.Play(HAND_HURT_STRING);
+
+            for (int e = 0; e < eyeLookers.Length; e++) {
+                eyeLookers[e].isActive = false;
+            }
+
+            handExplosion.gameObject.SetActive(true);
+
+            setInvincible(true);
+
+            isActive = false;
         }
     }
 
@@ -245,6 +253,12 @@ public class SliggaSlugger : Sligga
         actionIndex = 5;
         isActive = true;
         nextAction();
+
+        for (int e = 0; e < eyeLookers.Length; e++) {
+            eyeLookers[e].isActive = true;
+        }
+
+        handExplosion.gameObject.SetActive(false);
 
         setInvincible(false);
     }
